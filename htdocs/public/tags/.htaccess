@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+
+  RewriteBase /tags
+  RewriteRule ^(.*)/edit edit.php
+  RewriteRule ^(.*)/delete delete.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI}      (^/tags/)
+  RewriteRule . id.php
+</IfModule>

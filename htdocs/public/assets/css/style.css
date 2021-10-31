@@ -1,0 +1,65 @@
+/** 
+  ** 共通のCSS **
+**/
+.header {
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #333;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  height: 100%;
+  margin: auto;
+}
+
+.header__list {
+  display: flex;
+  justify-content: center;
+}
+
+.header__item + .header__item {
+  margin-left: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.submit {
+  color: #fff;
+  background-color: #294C7A;
+  font-weight: bold;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: none;
+}
+
+.error {
+  text-align: center;
+}
+
+.error__message {
+  font-size: 100px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+/**
+  ** 記事関連のCSS **
+**/
+.article-list__item {
+  width: 300px;
+  margin: 15px;
+}

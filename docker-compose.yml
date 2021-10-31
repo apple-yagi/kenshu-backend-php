@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  kenshu-php:
+    build:
+      context: ./infra/php
+      dockerfile: Dockerfile
+    container_name: kenshu-php
+    env_file:
+      - ./config/.env.local
+    environment:
+      - MYSQL_HOST=kenshu-mysql
+    ports:
+      - 80:80
+    volumes:
+      - ./htdocs:/var/www/html
+    depends_on:
+      - kenshu-mysql
+    links:
+      - kenshu-mysql
+
+  kenshu-mysql:
+    build:
+      context: ./infra/mysql
+      dockerfile: Dockerfile
+    container_name: kenshu-mysql
+    env_file:
+      - ./config/.env.local
+    ports:
+      - 3306:3306
+    volumes:
+      - ./infra/mysql/data:/var/lib/mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci

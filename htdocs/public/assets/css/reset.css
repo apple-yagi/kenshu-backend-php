@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #555;
+  font-size: 62.5%;
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: bold;
+}
+
+h2,h3,h4,h5,h6 {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+div,label,input,a,li,span,p {
+  font-size: 1.2rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}

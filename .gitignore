@@ -1,0 +1,11 @@
+**/.DS_Store
+**/.vscode
+
+# infra
+infra/mysql/data
+
+# htdocs
+htdocs/vendor
+
+# local upload directory
+htdocs/public/uploads
