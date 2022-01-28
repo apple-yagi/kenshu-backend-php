@@ -2,8 +2,6 @@
 
 namespace App\Adapter\Repositories;
 
-use App\Adapter\Repositories\DAO\Tag\CreateTagDao;
-use App\Adapter\Repositories\DAO\Tag\UpdateTagDao;
 use App\Adapter\Repositories\Interfaces\iTagRepository;
 use App\Entity\Tag;
 use PDO;
@@ -62,10 +60,8 @@ class TagRepository extends BaseRepository implements iTagRepository
 
   public function insert(Tag $tag): ?int
   {
-    $createTagDao = new CreateTagDao($tag);
-
     $stmt = $this->connection->prepare("INSERT INTO tags SET name = :name");
-    $stmt->bindParam(":name", $createTagDao->name, PDO::PARAM_STR);
+    $stmt->bindParam(":name", $tag->name, PDO::PARAM_STR);
     $result = $stmt->execute();
     $count = $stmt->rowCount();
 
@@ -78,11 +74,9 @@ class TagRepository extends BaseRepository implements iTagRepository
 
   public function update(Tag $tag): bool
   {
-    $updateTagDao = new UpdateTagDao($tag);
-
     $stmt = $this->connection->prepare("UPDATE tags SET name = :name WHERE id = :id");
-    $stmt->bindParam(":name", $updateTagDao->name, PDO::PARAM_STR);
-    $stmt->bindParam(":id", $updateTagDao->id, PDO::PARAM_INT);
+    $stmt->bindParam(":name", $tag->name, PDO::PARAM_STR);
+    $stmt->bindParam(":id", $tag->id, PDO::PARAM_INT);
     $result = $stmt->execute();
     $count = $stmt->rowCount();
 

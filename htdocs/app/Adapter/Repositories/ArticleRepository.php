@@ -2,8 +2,6 @@
 
 namespace App\Adapter\Repositories;
 
-use App\Adapter\Repositories\DAO\Article\CreateArticleDao;
-use App\Adapter\Repositories\DAO\Article\UpdateArticleDao;
 use App\Adapter\Repositories\Interfaces\iArticleRepository;
 use App\Entity\Article;
 use PDO;
@@ -54,12 +52,10 @@ class ArticleRepository extends BaseRepository implements iArticleRepository
 
   public function insert(Article $article): ?int
   {
-    $createArticleDao = new CreateArticleDao($article);
-
     $stmt = $this->connection->prepare("INSERT INTO articles SET title = :title, body = :body, user_id = :user_id");
-    $stmt->bindParam(":title", $createArticleDao->title, PDO::PARAM_STR);
-    $stmt->bindParam(":body", $createArticleDao->body, PDO::PARAM_STR);
-    $stmt->bindParam(":user_id", $createArticleDao->user_id, PDO::PARAM_INT);
+    $stmt->bindParam(":title", $article->title, PDO::PARAM_STR);
+    $stmt->bindParam(":body", $article->body, PDO::PARAM_STR);
+    $stmt->bindParam(":user_id", $article->user_id, PDO::PARAM_INT);
     $result = $stmt->execute();
     $count = $stmt->rowCount();
     if (!$result || !$count) {
@@ -71,12 +67,10 @@ class ArticleRepository extends BaseRepository implements iArticleRepository
 
   public function update(Article $article): bool
   {
-    $updateArticleDao = new UpdateArticleDao($article);
-
     $stmt = $this->connection->prepare("UPDATE articles SET title = :title, body = :body WHERE id = :id");
-    $stmt->bindParam(":title", $updateArticleDao->title, PDO::PARAM_STR);
-    $stmt->bindParam(":body", $updateArticleDao->body, PDO::PARAM_STR);
-    $stmt->bindParam(":id", $updateArticleDao->id, PDO::PARAM_INT);
+    $stmt->bindParam(":title", $article->title, PDO::PARAM_STR);
+    $stmt->bindParam(":body", $article->body, PDO::PARAM_STR);
+    $stmt->bindParam(":id", $article->id, PDO::PARAM_INT);
     $result = $stmt->execute();
     $count = $stmt->rowCount();
 

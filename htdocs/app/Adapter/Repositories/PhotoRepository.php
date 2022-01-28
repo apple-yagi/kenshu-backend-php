@@ -2,7 +2,6 @@
 
 namespace App\Adapter\Repositories;
 
-use App\Adapter\Repositories\DAO\Photo\CreatePhotoDao;
 use App\Adapter\Repositories\Interfaces\iPhotoRepository;
 use App\Entity\Photo;
 use PDO;
@@ -38,11 +37,9 @@ class PhotoRepository extends BaseRepository implements iPhotoRepository
 
   public function insert(Photo $photo): ?int
   {
-    $createPhotoDao = new CreatePhotoDao($photo);
-
     $stmt = $this->connection->prepare("INSERT INTO photos SET url = :url, article_id = :article_id");
-    $stmt->bindParam(":url", $createPhotoDao->url, PDO::PARAM_STR);
-    $stmt->bindParam(":article_id", $createPhotoDao->article_id, PDO::PARAM_INT);
+    $stmt->bindParam(":url", $photo->url, PDO::PARAM_STR);
+    $stmt->bindParam(":article_id", $photo->article_id, PDO::PARAM_INT);
     $result = $stmt->execute();
     $count = $stmt->rowCount();
 
