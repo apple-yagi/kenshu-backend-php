@@ -5,9 +5,8 @@ namespace App\Usecase;
 use App\Adapter\Repositories\Interfaces\iUserRepository;
 use App\Entity\Article;
 use App\Entity\User;
-use App\Usecase\Interfaces\iUserInteractor;
 
-class UserInteractor implements iUserInteractor
+class UserInteractor
 {
   protected iUserRepository $userRepository;
 
@@ -18,12 +17,12 @@ class UserInteractor implements iUserInteractor
 
   public function findAll(): array
   {
-    return $this->userRepository->selectAll();
+    return $this->userRepository->findAll();
   }
 
   public function findById(int $id): ?User
   {
-    $array = $this->userRepository->selectById($id);
+    $array = $this->userRepository->findById($id);
 
     if (!$array) {
       return null;

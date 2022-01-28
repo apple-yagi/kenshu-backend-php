@@ -13,14 +13,14 @@ class TagRepository extends BaseRepository implements iTagRepository
     parent::__construct($pdo);
   }
 
-  public function selectAll(): ?array
+  public function findAll(): ?array
   {
     $stmt = $this->connection->prepare("SELECT id, name FROM tags");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function selectById(int $id): ?array
+  public function findById(int $id): ?array
   {
     $stmt = $this->connection->prepare(
       "SELECT tags.id as id, tags.name as name, articles.id as article_id, articles.title as title, photos.url as thumbnail_url, users.id as user_id, users.name as username
@@ -42,7 +42,7 @@ class TagRepository extends BaseRepository implements iTagRepository
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function selectByName(string $name): ?object
+  public function findByName(string $name): ?object
   {
     $stmt = $this->connection->prepare(
       "SELECT id, name FROM tags WHERE name = ?"
@@ -58,7 +58,7 @@ class TagRepository extends BaseRepository implements iTagRepository
     return (object) $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  public function insert(Tag $tag): ?int
+  public function save(Tag $tag): ?int
   {
     $stmt = $this->connection->prepare("INSERT INTO tags SET name = :name");
     $stmt->bindParam(":name", $tag->name, PDO::PARAM_STR);

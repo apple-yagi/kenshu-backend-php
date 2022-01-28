@@ -7,14 +7,14 @@ use App\Adapter\Controllers\DTO\Auth\SignUpDto;
 use App\Adapter\Controllers\Interfaces\iAuthController;
 use App\Entity\Auth;
 use App\Adapter\Controllers\Errors\ValidationException;
-use App\Usecase\Interfaces\iAuthInteractor;
+use App\Usecase\AuthInteractor;
 use Exception;
 
 class AuthController implements iAuthController
 {
-  protected iAuthInteractor $authInteractor;
+  protected AuthInteractor $authInteractor;
 
-  function __construct(iAuthInteractor $ai)
+  function __construct(AuthInteractor $ai)
   {
     $this->authInteractor = $ai;
   }

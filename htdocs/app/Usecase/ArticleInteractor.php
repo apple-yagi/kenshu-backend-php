@@ -11,10 +11,9 @@ use App\Adapter\Uploaders\Interfaces\iPhotoUploader;
 use App\Entity\Article;
 use App\Entity\Photo;
 use App\Entity\Tag;
-use App\Usecase\Interfaces\iArticleInteractor;
 use Exception;
 
-class ArticleInteractor implements iArticleInteractor
+class ArticleInteractor
 {
   protected iArticleRepository $articleRepository;
   protected ?iPhotoRepository $photoRepository;
@@ -31,12 +30,12 @@ class ArticleInteractor implements iArticleInteractor
 
   public function findAll(): array
   {
-    return $this->articleRepository->selectAll();
+    return $this->articleRepository->findAll();
   }
 
   public function findById(int $id): ?Article
   {
-    $array = $this->articleRepository->selectById($id);
+    $array = $this->articleRepository->findById($id);
 
     if (!$array) {
       return null;
@@ -72,7 +71,7 @@ class ArticleInteractor implements iArticleInteractor
     // トランザクション開始
     $this->articleRepository->beginTransaction();
     try {
-      $createArticleId = $this->articleRepository->insert($createArticle);
+      $createArticleId = $this->articleRepository->save($createArticle);
       if (!$createArticleId) {
         throw new Exception("記事の登録に失敗しました");
       }
@@ -92,7 +91,7 @@ class ArticleInteractor implements iArticleInteractor
         }
 
         // アップロードされた画像をDBに登録
-        $photoInsertResult = $this->photoRepository->insertValues($createArticleId, $photoUrlList);
+        $photoInsertResult = $this->photoRepository->saveValues($createArticleId, $photoUrlList);
         if (!$photoInsertResult) {
           throw new Exception("画像の登録に失敗しました");
         }
@@ -107,7 +106,7 @@ class ArticleInteractor implements iArticleInteractor
       // 記事にタグが付与されている時
       if (!empty($createArticle->tags[0])) {
         // articles_tagsテーブルに保存
-        $tagInsertResult = $this->articleTagRepository->insertValues($createArticleId, $createArticle->tags);
+        $tagInsertResult = $this->articleTagRepository->saveValues($createArticleId, $createArticle->tags);
         if (!$tagInsertResult) {
           throw new Exception("タグの関連づけに失敗しました");
         }

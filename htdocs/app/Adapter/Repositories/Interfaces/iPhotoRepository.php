@@ -6,8 +6,8 @@ use App\Entity\Photo;
 
 interface iPhotoRepository extends iBaseRepository
 {
-  public function selectAll(): ?array;
-  public function selectById(int $id): ?object;
-  public function insert(Photo $photo): ?int;
-  public function insertValues(int $article_id, array $photoUrlList): ?int;
+  public function findAll(): ?array;
+  public function findById(int $id): ?object;
+  public function save(Photo $photo): ?int;
+  public function saveValues(int $article_id, array $photoUrlList): ?int;
 }

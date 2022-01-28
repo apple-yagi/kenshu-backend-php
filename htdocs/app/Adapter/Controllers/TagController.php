@@ -8,14 +8,14 @@ use App\Adapter\Controllers\Errors\NotFoundException;
 use App\Adapter\Controllers\Interfaces\iTagController;
 use App\Adapter\Controllers\Errors\ValidationException;
 use App\Entity\Tag;
-use App\Usecase\Interfaces\iTagInteractor;
+use App\Usecase\TagInteractor;
 use Exception;
 
 class TagController implements iTagController
 {
-  protected iTagInteractor $tagInteractor;
+  protected TagInteractor $tagInteractor;
 
-  function __construct(iTagInteractor $ti)
+  function __construct(TagInteractor $ti)
   {
     $this->tagInteractor = $ti;
   }

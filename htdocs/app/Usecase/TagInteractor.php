@@ -7,10 +7,9 @@ use App\Adapter\Controllers\DTO\Tag\UpdateTagDto;
 use App\Adapter\Repositories\Interfaces\iTagRepository;
 use App\Entity\Article;
 use App\Entity\Tag;
-use App\Usecase\Interfaces\iTagInteractor;
 use Exception;
 
-class TagInteractor implements iTagInteractor
+class TagInteractor
 {
   protected iTagRepository $tagRepository;
 
@@ -21,12 +20,12 @@ class TagInteractor implements iTagInteractor
 
   public function findAll(): array
   {
-    return $this->tagRepository->selectAll();
+    return $this->tagRepository->findAll();
   }
 
   public function findById(int $id): ?Tag
   {
-    $array = $this->tagRepository->selectById($id);
+    $array = $this->tagRepository->findById($id);
 
     if (!$array) {
       return null;
@@ -51,14 +50,14 @@ class TagInteractor implements iTagInteractor
 
   public function save(CreateTagDto $createTagDto): int
   {
-    $findTag = $this->tagRepository->selectByName($createTagDto->name);
+    $findTag = $this->tagRepository->findByName($createTagDto->name);
     if ($findTag) {
       throw new Exception("既に登録されているタグ名です");
     }
 
     $createTag = new Tag($createTagDto);
 
-    $result = $this->tagRepository->insert($createTag);
+    $result = $this->tagRepository->save($createTag);
     if (!$result) {
       throw new Exception("データの登録に失敗しました");
     }

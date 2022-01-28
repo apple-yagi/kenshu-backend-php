@@ -5,14 +5,14 @@ namespace App\Adapter\Controllers;
 use App\Adapter\Controllers\Errors\NotFoundException;
 use App\Adapter\Controllers\Interfaces\iUserController;
 use App\Entity\User;
-use App\Usecase\Interfaces\iUserInteractor;
+use App\Usecase\UserInteractor;
 use Exception;
 
 class UserController implements iUserController
 {
-  protected iUserInteractor $userInteractor;
+  protected UserInteractor $userInteractor;
 
-  function __construct(iUserInteractor $ui)
+  function __construct(UserInteractor $ui)
   {
     $this->userInteractor = $ui;
   }

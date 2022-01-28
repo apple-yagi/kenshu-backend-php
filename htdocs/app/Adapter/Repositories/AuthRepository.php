@@ -13,7 +13,7 @@ class AuthRepository extends BaseRepository implements iAuthRepository
     parent::__construct($pdo);
   }
 
-  public function selectUserByName(string $name): ?object
+  public function findByName(string $name): ?object
   {
     $stmt = $this->connection->prepare("select id, name, password_hash from users where name = ?");
     $stmt->bindValue(1, $name);
@@ -27,7 +27,7 @@ class AuthRepository extends BaseRepository implements iAuthRepository
     return (object) $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  public function insert(Auth $auth): ?int
+  public function save(Auth $auth): ?int
   {
     $stmt = $this->connection->prepare("INSERT INTO users SET name = :name, password_hash = :password_hash");
     $stmt->bindParam(":name", $auth->name, PDO::PARAM_STR);

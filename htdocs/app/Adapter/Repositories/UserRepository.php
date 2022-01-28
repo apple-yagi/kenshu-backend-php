@@ -12,7 +12,7 @@ class UserRepository extends BaseRepository implements iUserRepository
     parent::__construct($pdo);
   }
 
-  public function selectAll(): array
+  public function findAll(): array
   {
     $stmt = $this->connection->prepare("SELECT id, name FROM users");
     $stmt->execute();
@@ -20,7 +20,7 @@ class UserRepository extends BaseRepository implements iUserRepository
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function selectById(int $id): ?array
+  public function findById(int $id): ?array
   {
     $stmt = $this->connection->prepare(
       "SELECT users.id as id, name, articles.id as article_id, title, url as thumbnail_url

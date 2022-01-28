@@ -6,10 +6,9 @@ use App\Adapter\Controllers\DTO\Auth\LoginUserDto;
 use App\Adapter\Controllers\DTO\Auth\SignUpDto;
 use App\Adapter\Repositories\Interfaces\iAuthRepository;
 use App\Entity\Auth;
-use App\Usecase\Interfaces\iAuthInteractor;
 use Exception;
 
-class AuthInteractor implements iAuthInteractor
+class AuthInteractor
 {
   protected iAuthRepository $authRepository;
 
@@ -20,7 +19,7 @@ class AuthInteractor implements iAuthInteractor
 
   public function validate(LoginUserDto $loginUserDto): ?Auth
   {
-    $target = $this->authRepository->selectUserByName($loginUserDto->name);
+    $target = $this->authRepository->findByName($loginUserDto->name);
 
     if (!$target) {
       return null;
@@ -39,7 +38,7 @@ class AuthInteractor implements iAuthInteractor
   {
     $createAuth = new Auth($signUpDto);
 
-    $findUser = $this->authRepository->selectUserByName($createAuth->name);
+    $findUser = $this->authRepository->findByName($createAuth->name);
     if ($findUser) {
       throw new Exception("既に登録されている名前です");
     }
@@ -47,7 +46,7 @@ class AuthInteractor implements iAuthInteractor
     // passwordをハッシュ
     $createAuth->hash_pass();
 
-    $result = $this->authRepository->insert($createAuth);
+    $result = $this->authRepository->save($createAuth);
     if (!$result) {
       throw new Exception("データの登録に失敗しました");
     }

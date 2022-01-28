@@ -8,14 +8,14 @@ use App\Adapter\Controllers\Errors\NotFoundException;
 use App\Adapter\Controllers\Interfaces\iArticleController;
 use App\Entity\Article;
 use App\Adapter\Controllers\Errors\ValidationException;
-use App\Usecase\Interfaces\iArticleInteractor;
+use App\Usecase\ArticleInteractor;
 use Exception;
 
 class ArticleController implements iArticleController
 {
-  protected iArticleInteractor $articleInteractor;
+  protected ArticleInteractor $articleInteractor;
 
-  function __construct(iArticleInteractor $ai)
+  function __construct(ArticleInteractor $ai)
   {
     $this->articleInteractor = $ai;
   }

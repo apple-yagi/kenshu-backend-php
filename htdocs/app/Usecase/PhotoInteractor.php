@@ -5,10 +5,9 @@ namespace App\Usecase;
 use App\Adapter\Controllers\DTO\Photo\CreatePhotoDto;
 use App\Adapter\Repositories\Interfaces\iPhotoRepository;
 use App\Entity\Photo;
-use App\Usecase\Interfaces\iPhotoInteractor;
 use Exception;
 
-class PhotoInteractor implements iPhotoInteractor
+class PhotoInteractor
 {
   protected iPhotoRepository $photoRepository;
 
@@ -19,12 +18,12 @@ class PhotoInteractor implements iPhotoInteractor
 
   public function findAll(): array
   {
-    return $this->photoRepository->selectAll();
+    return $this->photoRepository->findAll();
   }
 
   public function findById(int $id): ?Photo
   {
-    $obj = $this->photoRepository->selectById($id);
+    $obj = $this->photoRepository->findById($id);
 
     if (!$obj) {
       return null;
@@ -37,7 +36,7 @@ class PhotoInteractor implements iPhotoInteractor
   {
     $createPhoto = new Photo($cad);
 
-    $result = $this->photoRepository->insert($createPhoto);
+    $result = $this->photoRepository->save($createPhoto);
     if (!$result) {
       throw new Exception("データの登録に失敗しました");
     }

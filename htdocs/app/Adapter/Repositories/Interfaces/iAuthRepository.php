@@ -6,6 +6,6 @@ use App\Entity\Auth;
 
 interface iAuthRepository extends iBaseRepository
 {
-  public function selectUserByName(string $name): ?object;
-  public function insert(Auth $auth): ?int;
+  public function findByName(string $name): ?object;
+  public function save(Auth $auth): ?int;
 }
