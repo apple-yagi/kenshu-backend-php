@@ -1,6 +1,6 @@
 <?php
 
-$dbname = getenv('MYSQL_DATABASE', false);
+$dbname = getenv('MYSQL_DATABASE', false) ?: "kenshudb";
 $dbhost = getenv('MYSQL_HOST', false) ?: "localhost";
 $dbuser = getenv('MYSQL_USER', false) ?: "root";
 $dbpassword = getenv('MYSQL_PASSWORD', false) ?: "root";
